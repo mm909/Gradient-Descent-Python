@@ -32,17 +32,19 @@ def gradient( m, b, list, alpha ):
 def model():
     data = np.genfromtxt( "input.txt", delimiter = ',' )
     normData = min_max( data )
-    m = 0
-    b = 0
+    m = np.random.randint(10)
+    b = np.random.randint(10)
     alpha = 0.01
     itteration = 0
     while(meanSquareError(m,b,normData) > 0.01):
         m, b = gradient(m, b, normData, alpha)
         itteration += 1
+        if(itteration % 200 == 0):
+            plt.plot(normData[:,0], b + m * normData[:,0], color='red')
     print(itteration, math.floor(meanSquareError(m,b,normData)*100)/100)
     print("Y = "+ str(math.floor(m*100)/100) + "X + " + str(math.floor(b*100)/100) )
     plt.scatter(normData[:,0], normData[:,1])
-    plt.plot(normData[:,0], b + m * normData[:,0], color='red')
+    plt.plot(normData[:,0], b + m * normData[:,0], color='green')
     plt.show()
 
 model()
